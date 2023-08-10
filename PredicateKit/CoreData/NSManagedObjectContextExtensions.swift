@@ -218,6 +218,10 @@ public struct DBRequest<Entity: NSManagedObject> {
     updating(\.affectedStores, with: affectedStores)
   }
 
+  public func fromStores(_ affectedStores: [NSPersistentStore]) -> Self {
+    updating(\.affectedStores, with: affectedStores)
+  }
+    
   /// Specifies the key-paths of the properties on `Entity` to fetch.
   ///
   /// # See also:
