@@ -1,5 +1,5 @@
 //
-//  Predicate.swift
+//  DBPredicate.swift
 //  PredicateKit
 //
 //  Copyright 2020 Faiçal Tchirou
@@ -20,7 +20,7 @@
 
 import Foundation
 
-// Tag: - Predicate
+// Tag: - DBPredicate
 ///
 /// A type-safe set of conditions used to filter a list of objects of type `Root`.
 ///
@@ -185,7 +185,7 @@ import Foundation
 /// ###### none
 ///
 ///     // Matches all accounts where no purchase is less than 50.
-///     let _: Predicate: <Account> = (\Account.purchases).none <= 50
+///     let _: DBPredicate: <Account> = (\Account.purchases).none <= 50
 ///
 /// # Predicates on types with one-to-one relationships
 ///
@@ -205,10 +205,10 @@ import Foundation
 ///     }
 ///
 ///     // Matches all users with the billing account type 'Pro'
-///     let _: Predicate<User> = \User.billingInfo.accountType == "Pro"
+///     let _: DBPredicate<User> = \User.billingInfo.accountType == "Pro"
 ///
 ///     // Matches all users with an average purchase of 120
-///     let _: Predicate<User> = (\User.billingInfo.purchases).average == 120.0
+///     let _: DBPredicate<User> = (\User.billingInfo.purchases).average == 120.0
 ///
 /// # Predicates on types with one-to-many relationships
 ///
@@ -250,12 +250,12 @@ import Foundation
 ///     let predicate = (\Account.name).contains("Account") && all(\.profiles, where: (\Profile.name).contains("Doe")).size == 2)
 ///
 ///
-public indirect enum Predicate<Root> {
+public indirect enum DBPredicate<Root> {
   case comparison(Comparison)
   case boolean(Bool)
-  case and(Predicate<Root>, Predicate<Root>)
-  case or(Predicate<Root>, Predicate<Root>)
-  case not(Predicate<Root>)
+  case and(DBPredicate<Root>, DBPredicate<Root>)
+  case or(DBPredicate<Root>, DBPredicate<Root>)
+  case not(DBPredicate<Root>)
 }
 
 public struct Comparison {
@@ -301,7 +301,7 @@ public struct Query<Root, Subject: AnyArrayOrSet>: Expression {
   public typealias Value = Subject
 
   let key: AnyKeyPath
-  let predicate: Predicate<Subject.Element>
+  let predicate: DBPredicate<Subject.Element>
 }
 
 public struct ArrayElementKeyPath<Array, Value>: Expression where Array: Expression, Array.Value: AnyArrayOrSet {
@@ -366,78 +366,78 @@ enum ArrayElementKeyPathType: Equatable {
 
 // MARK: - Basic Comparisons
 
-public func < <E: Expression, T: Comparable & Primitive> (lhs: E, rhs: T) -> Predicate<E.Root> where E.Value == T {
+public func < <E: Expression, T: Comparable & Primitive> (lhs: E, rhs: T) -> DBPredicate<E.Root> where E.Value == T {
   .comparison(.init(lhs, .lessThan, rhs))
 }
 
-public func <= <E: Expression, T: Comparable & Primitive> (lhs: E, rhs: T) -> Predicate<E.Root> where E.Value == T {
+public func <= <E: Expression, T: Comparable & Primitive> (lhs: E, rhs: T) -> DBPredicate<E.Root> where E.Value == T {
   .comparison(.init(lhs, .lessThanOrEqual, rhs))
 }
 
-public func == <E: Expression, T: Equatable & Primitive> (lhs: E, rhs: T) -> Predicate<E.Root> where E.Value == T {
+public func == <E: Expression, T: Equatable & Primitive> (lhs: E, rhs: T) -> DBPredicate<E.Root> where E.Value == T {
   .comparison(.init(lhs, .equal, rhs))
 }
 
 @available(iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-public func == <E: Expression, T: Identifiable> (lhs: E, rhs: T) -> Predicate<E.Root> where E.Value == T, T.ID: Primitive {
+public func == <E: Expression, T: Identifiable> (lhs: E, rhs: T) -> DBPredicate<E.Root> where E.Value == T, T.ID: Primitive {
   .comparison(.init(ObjectIdentifier<E, T.ID>(root: lhs), .equal, rhs.id))
 }
 
 @_disfavoredOverload
-public func == <E: Expression> (lhs: E, rhs: Nil) -> Predicate<E.Root> where E.Value: OptionalType {
+public func == <E: Expression> (lhs: E, rhs: Nil) -> DBPredicate<E.Root> where E.Value: OptionalType {
   .comparison(.init(lhs, .equal, rhs))
 }
 
-public func != <E: Expression, T: Equatable & Primitive> (lhs: E, rhs: T) -> Predicate<E.Root> where E.Value == T {
+public func != <E: Expression, T: Equatable & Primitive> (lhs: E, rhs: T) -> DBPredicate<E.Root> where E.Value == T {
   .comparison(.init(lhs, .notEqual, rhs))
 }
 
-public func >= <E: Expression, T: Comparable & Primitive> (lhs: E, rhs: T) -> Predicate<E.Root> where E.Value == T {
+public func >= <E: Expression, T: Comparable & Primitive> (lhs: E, rhs: T) -> DBPredicate<E.Root> where E.Value == T {
   .comparison(.init(lhs, .greaterThanOrEqual, rhs))
 }
 
-public func > <E: Expression, T: Comparable & Primitive> (lhs: E, rhs: T) -> Predicate<E.Root> where E.Value == T {
+public func > <E: Expression, T: Comparable & Primitive> (lhs: E, rhs: T) -> DBPredicate<E.Root> where E.Value == T {
   .comparison(.init(lhs, .greaterThan, rhs))
 }
 
 // MARK: - Compound Predicates
 
-public func && <T> (lhs: Predicate<T>, rhs: Predicate<T>) -> Predicate<T> {
+public func && <T> (lhs: DBPredicate<T>, rhs: DBPredicate<T>) -> DBPredicate<T> {
   .and(lhs, rhs)
 }
 
-public func || <T> (lhs: Predicate<T>, rhs: Predicate<T>) -> Predicate<T> {
+public func || <T> (lhs: DBPredicate<T>, rhs: DBPredicate<T>) -> DBPredicate<T> {
   .or(lhs, rhs)
 }
 
-public prefix func ! <T> (predicate: Predicate<T>) -> Predicate<T> {
+public prefix func ! <T> (predicate: DBPredicate<T>) -> DBPredicate<T> {
   .not(predicate)
 }
 
 // MARK: - String Comparisons
 
 extension Expression where Value: StringValue {
-  public func isEqualTo(_ string: String, _ options: ComparisonOptions) -> Predicate<Root> {
+  public func isEqualTo(_ string: String, _ options: ComparisonOptions) -> DBPredicate<Root> {
     .comparison(.init(self, .equal, string, options))
   }
 
-  public func beginsWith(_ string: String, _ options: ComparisonOptions = .caseInsensitive) -> Predicate<Root> {
+  public func beginsWith(_ string: String, _ options: ComparisonOptions = .caseInsensitive) -> DBPredicate<Root> {
     .comparison(.init(self, .beginsWith, string, options))
   }
 
-  public func contains(_ string: String, _ options: ComparisonOptions = .caseInsensitive) -> Predicate<Root> {
+  public func contains(_ string: String, _ options: ComparisonOptions = .caseInsensitive) -> DBPredicate<Root> {
     .comparison(.init(self, .contains, string, options))
   }
 
-  public func endsWith(_ string: String, _ options: ComparisonOptions = .caseInsensitive) -> Predicate<Root> {
+  public func endsWith(_ string: String, _ options: ComparisonOptions = .caseInsensitive) -> DBPredicate<Root> {
     .comparison(.init(self, .endsWith, string, options))
   }
 
-  public func like(_ string: String, _ options: ComparisonOptions = .caseInsensitive) -> Predicate<Root> {
+  public func like(_ string: String, _ options: ComparisonOptions = .caseInsensitive) -> DBPredicate<Root> {
     .comparison(.init(self, .like, string, options))
   }
 
-  public func matches(_ regex: NSRegularExpression, _ options: ComparisonOptions = .caseInsensitive) -> Predicate<Root> {
+  public func matches(_ regex: NSRegularExpression, _ options: ComparisonOptions = .caseInsensitive) -> DBPredicate<Root> {
     .comparison(.init(self, .matches, regex.pattern, options))
   }
 }
@@ -445,7 +445,7 @@ extension Expression where Value: StringValue {
 // MARK: - Range Comparison
 
 extension Expression where Value: Comparable & Primitive {
-  public func between(_ range: ClosedRange<Value>) -> Predicate<Root> {
+  public func between(_ range: ClosedRange<Value>) -> DBPredicate<Root> {
     .comparison(.init(self, .between, [range.lowerBound, range.upperBound]))
   }
 }
@@ -453,7 +453,7 @@ extension Expression where Value: Comparable & Primitive {
 public func ~= <E: Expression, T: Comparable & Primitive> (
   lhs: E,
   rhs: ClosedRange<T>
-) -> Predicate<E.Root> where E.Value == T {
+) -> DBPredicate<E.Root> where E.Value == T {
   lhs.between(rhs)
 }
 
@@ -486,21 +486,21 @@ extension Expression where Value: AnyArrayOrSet {
 }
 
 extension Expression where Value: Primitive {
-  public func `in`(_ list: Value...) -> Predicate<Root> {
+  public func `in`(_ list: Value...) -> DBPredicate<Root> {
     .comparison(.init(self, .in, list))
   }
 
-  public func `in`(_ list: [Value]) -> Predicate<Root> {
+  public func `in`(_ list: [Value]) -> DBPredicate<Root> {
     .comparison(.init(self, .in, list))
   }
     
-  public func `in`(_ set: Set<Value>) -> Predicate<Root> where Value: Hashable {
+  public func `in`(_ set: Set<Value>) -> DBPredicate<Root> where Value: Hashable {
     .comparison(.init(self, .in, Array(set)))
   }
 }
 
 extension Expression where Value: StringValue & Primitive {
-  public func `in`(_ list: [Value], _ options: ComparisonOptions = .caseInsensitive) -> Predicate<Root> {
+  public func `in`(_ list: [Value], _ options: ComparisonOptions = .caseInsensitive) -> DBPredicate<Root> {
     .comparison(.init(self, .in, list, options))
   }
 }
@@ -583,13 +583,13 @@ extension Expression where Value: AnyArrayOrSet & ComparableCollection {
 ///
 ///       (\Account.name).contains("Account") && all(\.profiles, where: (\Profile.name).contains("Doe")).size == 2)
 ///
-public func all<T, U: AnyArrayOrSet>(_ keyPath: KeyPath<T, U>, where predicate: Predicate<U.Element>) -> Query<T, U> {
+public func all<T, U: AnyArrayOrSet>(_ keyPath: KeyPath<T, U>, where predicate: DBPredicate<U.Element>) -> Query<T, U> {
   .init(key: keyPath, predicate: predicate)
 }
 
 // MARK: - Boolean predicates
 
-extension Predicate: ExpressibleByBooleanLiteral {
+extension DBPredicate: ExpressibleByBooleanLiteral {
   public init(booleanLiteral value: Bool) {
     self = .boolean(value)
   }

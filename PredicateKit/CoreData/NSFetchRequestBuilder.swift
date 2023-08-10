@@ -43,7 +43,7 @@ struct NSFetchRequestBuilder {
   }
 
   func makeRequest<Entity: NSManagedObject, Result: NSFetchRequestResult>(
-    from request: FetchRequest<Entity>
+    from request: DBRequest<Entity>
   ) -> NSFetchRequest<Result> {
     let fetchRequest = NSFetchRequest<Result>(entityName: entityName)
 
@@ -66,7 +66,7 @@ struct NSFetchRequestBuilder {
     return fetchRequest
   }
 
-  fileprivate func makePredicate<Root>(from predicate: Predicate<Root>) -> NSPredicate {
+  fileprivate func makePredicate<Root>(from predicate: DBPredicate<Root>) -> NSPredicate {
     switch predicate {
     case let .comparison(comparison):
       switch comparison.modifier {
@@ -163,7 +163,7 @@ struct NSFetchRequestBuilder {
     return comparisonOptions
   }
 
-  private func makeSortDescriptor<T>(from sortCriterion: FetchRequest<T>.SortCriterion<T>) -> NSSortDescriptor {
+  private func makeSortDescriptor<T>(from sortCriterion: DBRequest<T>.SortCriterion<T>) -> NSSortDescriptor {
     guard let comparator = sortCriterion.comparator else {
       return NSSortDescriptor(
         key: sortCriterion.property.stringValue,

@@ -166,7 +166,7 @@ final class OperatorTests: XCTestCase {
   }
   
   func testArrayElementLessThanOrEqualPrimitive() throws {
-    let predicate: Predicate<Data> = (\Data.stocks).first <= 35.0
+    let predicate: DBPredicate<Data> = (\Data.stocks).first <= 35.0
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("stocks.first <= 35.0 should result in a comparison")
@@ -190,7 +190,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testArrayElementKeyPathLessThanOrEqualPrimitive() throws {
-    let predicate: Predicate<Data> = (\Data.relationships).last(\.count) <= 5
+    let predicate: DBPredicate<Data> = (\Data.relationships).last(\.count) <= 5
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("relationships.last.count <=5 should result in a comparison")
@@ -268,7 +268,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testOptionalKeyPathEqualToNil() throws {
-    let predicate: Predicate<Data> = \Data.optionalRelationship == nil
+    let predicate: DBPredicate<Data> = \Data.optionalRelationship == nil
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("optionalRelationship == nil should result in a comparison")
@@ -286,7 +286,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testOptionalArrayKeyPathEqualToNil() throws {
-    let predicate: Predicate<Data> = \Data.optionalRelationships == nil
+    let predicate: DBPredicate<Data> = \Data.optionalRelationships == nil
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("optionalRelationships == nil should result in a comparison")
@@ -518,7 +518,7 @@ final class OperatorTests: XCTestCase {
   }
   
   func testArrayElementGreaterThanOrEqualPrimitive() throws {
-    let predicate: Predicate<Data> = (\Data.stocks).first >= 35.0
+    let predicate: DBPredicate<Data> = (\Data.stocks).first >= 35.0
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("tags.first >= 35.0 should result in a comparison")
@@ -637,7 +637,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testArrayElementKeyPathGreaterThanPrimitive() throws {
-    let predicate: Predicate<Data> = (\Data.relationships).at(index: 2, \.count) > 5
+    let predicate: DBPredicate<Data> = (\Data.relationships).at(index: 2, \.count) > 5
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("relationships.last.count == 5 should result in a comparison")
@@ -1348,7 +1348,7 @@ final class OperatorTests: XCTestCase {
   // MARK: - in
 
   func testKeyPathIn() throws {
-    let predicate: Predicate<Data> = (\Data.text).in("hello", "world", "welcome")
+    let predicate: DBPredicate<Data> = (\Data.text).in("hello", "world", "welcome")
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("text.in('hello', 'world', 'welcome') should result in a comparison")
@@ -1368,7 +1368,7 @@ final class OperatorTests: XCTestCase {
   }
     
   func testKeyPathInArray() throws {
-    let predicate: Predicate<Data> = (\Data.count).in([21, 42, 63])
+    let predicate: DBPredicate<Data> = (\Data.count).in([21, 42, 63])
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("count.in([21, 42, 63]) should result in a comparison")
@@ -1388,7 +1388,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testKeyPathInSet() throws {
-    let predicate: Predicate<Data> = (\Data.count).in(Set([21, 42, 63]))
+    let predicate: DBPredicate<Data> = (\Data.count).in(Set([21, 42, 63]))
     
     guard case let .comparison(comparison) = predicate else {
       XCTFail("count.in(Set([21, 42, 63])) should result in a comparison")
@@ -1411,7 +1411,7 @@ final class OperatorTests: XCTestCase {
   }
   
   func testKeyPathInCaseInsensitive() throws {
-    let predicate: Predicate<Data> = (\Data.text).in(["hello", "world", "welcome"], .caseInsensitive)
+    let predicate: DBPredicate<Data> = (\Data.text).in(["hello", "world", "welcome"], .caseInsensitive)
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("text.in('hello', 'world', 'welcome') should result in a comparison")
@@ -1432,7 +1432,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testKeyPathInDiacriticInsensitive() throws {
-    let predicate: Predicate<Data> = (\Data.text).in(["hello", "world", "welcome"], .diacriticInsensitive)
+    let predicate: DBPredicate<Data> = (\Data.text).in(["hello", "world", "welcome"], .diacriticInsensitive)
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("text.in('hello', 'world', 'welcome') should result in a comparison")
@@ -1453,7 +1453,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testKeyPathInNormalized() throws {
-    let predicate: Predicate<Data> = (\Data.text).in(["hello", "world", "welcome"], .normalized)
+    let predicate: DBPredicate<Data> = (\Data.text).in(["hello", "world", "welcome"], .normalized)
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("text.in('hello', 'world', 'welcome') should result in a comparison")
@@ -1474,7 +1474,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testArrayElementKeyPathIn() throws {
-    let predicate: Predicate<Data> = (\Data.relationships).last(\.text).in("hello", "world")
+    let predicate: DBPredicate<Data> = (\Data.relationships).last(\.text).in("hello", "world")
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("relationships.first.text.in('hello', 'world') should result in a comparison")
@@ -1495,7 +1495,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testArrayElementKeyPathInCaseInsensitive() throws {
-    let predicate: Predicate<Data> = (\Data.relationships).last(\.text).in(["hello", "world"], .caseInsensitive)
+    let predicate: DBPredicate<Data> = (\Data.relationships).last(\.text).in(["hello", "world"], .caseInsensitive)
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("relationships.first.text.in('hello', 'world') should result in a comparison")
@@ -1517,7 +1517,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testArrayElementKeyPathInDiacriticInsensitive() throws {
-    let predicate: Predicate<Data> = (\Data.relationships).last(\.text).in(["hello", "world"], .diacriticInsensitive)
+    let predicate: DBPredicate<Data> = (\Data.relationships).last(\.text).in(["hello", "world"], .diacriticInsensitive)
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("relationships.first.text.in('hello', 'world') should result in a comparison")
@@ -1539,7 +1539,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testArrayElementKeyPathInNormalized() throws {
-    let predicate: Predicate<Data> = (\Data.relationships).last(\.text).in(["hello", "world"], .normalized)
+    let predicate: DBPredicate<Data> = (\Data.relationships).last(\.text).in(["hello", "world"], .normalized)
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("relationships.first.text.in('hello', 'world') should result in a comparison")
@@ -1584,7 +1584,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testKeyPathAny() throws {
-    let predicate: Predicate<Data> = (\Data.relationships).any(\.count) == 42
+    let predicate: DBPredicate<Data> = (\Data.relationships).any(\.count) == 42
     
     guard case let .comparison(comparison) = predicate else {
       XCTFail("relationships.any.count == 42 should result in an ANY aggregate comparison")
@@ -1639,7 +1639,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testSelfKeyPathAll() throws {
-    let predicate: Predicate<Data> = (\Data.stocks).all < 35.0
+    let predicate: DBPredicate<Data> = (\Data.stocks).all < 35.0
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("stocks.all < 35.0 should result in an ALL aggregate comparison")
@@ -1660,7 +1660,7 @@ final class OperatorTests: XCTestCase {
   }
   
   func testKeyPathAll() throws {
-    let predicate: Predicate<Data> = (\Data.relationships).all(\.count) == 42
+    let predicate: DBPredicate<Data> = (\Data.relationships).all(\.count) == 42
     
     guard case let .comparison(comparison) = predicate else {
       XCTFail("relationships.all.count == 42 should result in an ALL aggregate comparison")
@@ -1715,7 +1715,7 @@ final class OperatorTests: XCTestCase {
   }
   
   func testSelfKeyPathNone() throws {
-    let predicate: Predicate<Data> = (\Data.stocks).none == 35.0
+    let predicate: DBPredicate<Data> = (\Data.stocks).none == 35.0
 
     guard case let .comparison(comparison) = predicate else {
       XCTFail("stocks.any >= 35.0 should result in an ALL aggregate comparison")
@@ -1736,7 +1736,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testKeyPathNone() throws {
-    let predicate: Predicate<Data> = (\Data.relationships).none(\.count) > 42
+    let predicate: DBPredicate<Data> = (\Data.relationships).none(\.count) > 42
     
     guard case let .comparison(comparison) = predicate else {
       XCTFail("relationships.none.count > 42 should result in a NOT ANY aggregate comparison")
@@ -2195,7 +2195,7 @@ final class OperatorTests: XCTestCase {
   // MARK: - Boolean literals
 
   func testTrue() throws {
-    let predicate: Predicate<Data> = true
+    let predicate: DBPredicate<Data> = true
 
     guard case let .boolean(value) = predicate else {
       XCTFail("true should evaluate to a boolean predicate")
@@ -2206,7 +2206,7 @@ final class OperatorTests: XCTestCase {
   }
 
   func testFalse() throws {
-    let predicate: Predicate<Data> = false
+    let predicate: DBPredicate<Data> = false
 
     guard case let .boolean(value) = predicate else {
       XCTFail("false should evaluate to a boolean predicate")

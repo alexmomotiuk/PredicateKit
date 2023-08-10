@@ -40,8 +40,8 @@ extension SwiftUI.FetchRequest where Result: NSManagedObject {
   ///         }
   ///       }
   ///
-  public init(predicate: Predicate<Result>, animation: Animation? = nil) {
-    self.init(fetchRequest: FetchRequest(predicate: predicate), animation: animation)
+  public init(predicate: DBPredicate<Result>, animation: Animation? = nil) {
+    self.init(fetchRequest: DBRequest(predicate: predicate), animation: animation)
   }
 
   /// Creates an instance from the provided fetch request and animation.
@@ -66,7 +66,7 @@ extension SwiftUI.FetchRequest where Result: NSManagedObject {
   ///         }
   ///       }
   ///
-  public init(fetchRequest: FetchRequest<Result>, animation: Animation? = nil) {
+  public init(fetchRequest: DBRequest<Result>, animation: Animation? = nil) {
     let entityName = Result.entity().name ?? String(describing: Result.self)
     let fetchRequestBuilder = NSFetchRequestBuilder(entityName: entityName)
     self.init(fetchRequest: fetchRequestBuilder.makeRequest(from: fetchRequest), animation: animation)
@@ -93,7 +93,7 @@ extension SwiftUI.FetchRequest where Result: NSManagedObject {
   ///        }
   ///      }
   ///
-  public init(fetchRequest: FetchRequest<Result>, transaction: Transaction) {
+  public init(fetchRequest: DBRequest<Result>, transaction: Transaction) {
     let entityName = Result.entity().name ?? String(describing: Result.self)
     let fetchRequestBuilder = NSFetchRequestBuilder(entityName: entityName)
     self.init(fetchRequest: fetchRequestBuilder.makeRequest(from: fetchRequest), transaction: transaction)
@@ -101,7 +101,7 @@ extension SwiftUI.FetchRequest where Result: NSManagedObject {
 }
 
 @available(iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-extension FetchRequest {
+extension DBRequest {
   /// Creates a fetch request using the provided predicate.
   ///
   /// - Parameter predicate: The predicate used to define a filter for the fetched results.
@@ -127,7 +127,7 @@ extension FetchRequest {
   ///        }
   ///      }
   ///
-  public init(predicate: Predicate<Entity>) {
+  public init(predicate: DBPredicate<Entity>) {
     // It's okay to provide this "default" context. It will not be used; instead SwiftUI will
     // use the context injected in the environment of the view to execute the created
     // fetch request.
@@ -137,7 +137,7 @@ extension FetchRequest {
 }
 
 @available(iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-extension FetchRequest {
+extension DBRequest {
   /// Creates a fetch request that returns all objects in the underlying store.
   ///
   /// - Important: Use this initializer **only** in conjunction with the SwiftUI property wrapper` @FetchRequest`. Fetch

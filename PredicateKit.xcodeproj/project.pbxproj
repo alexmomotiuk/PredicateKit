@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		320346662546AA5400F9661B /* PredicateKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3203465C2546AA5400F9661B /* PredicateKit.framework */; };
 		3203466D2546AA5400F9661B /* PredicateKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3203465F2546AA5400F9661B /* PredicateKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3203467D2546AB9A00F9661B /* Primitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3203467C2546AB9A00F9661B /* Primitive.swift */; };
-		320346812546ABB900F9661B /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346802546ABB900F9661B /* Predicate.swift */; };
+		320346812546ABB900F9661B /* FetchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346802546ABB900F9661B /* FetchPredicate.swift */; };
 		320346862546B70000F9661B /* NSManagedObjectContextExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346852546B70000F9661B /* NSManagedObjectContextExtensions.swift */; };
 		320346E12547073A00F9661B /* PrimitiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346E02547073A00F9661B /* PrimitiveTests.swift */; };
 		320346E925470CA700F9661B /* OperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346E825470CA700F9661B /* OperatorTests.swift */; };
@@ -44,7 +44,7 @@
 		320346652546AA5400F9661B /* PredicateKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PredicateKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3203466C2546AA5400F9661B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3203467C2546AB9A00F9661B /* Primitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitive.swift; sourceTree = "<group>"; };
-		320346802546ABB900F9661B /* Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicate.swift; sourceTree = "<group>"; };
+		320346802546ABB900F9661B /* FetchPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPredicate.swift; sourceTree = "<group>"; };
 		320346852546B70000F9661B /* NSManagedObjectContextExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContextExtensions.swift; sourceTree = "<group>"; };
 		320346E02547073A00F9661B /* PrimitiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimitiveTests.swift; sourceTree = "<group>"; };
 		320346E825470CA700F9661B /* OperatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorTests.swift; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 				320347122548EE4B00F9661B /* Functions.swift */,
 				320346602546AA5400F9661B /* Info.plist */,
 				3203467C2546AB9A00F9661B /* Primitive.swift */,
-				320346802546ABB900F9661B /* Predicate.swift */,
+				320346802546ABB900F9661B /* FetchPredicate.swift */,
 				3203465F2546AA5400F9661B /* PredicateKit.h */,
 			);
 			path = PredicateKit;
@@ -235,8 +235,9 @@
 		320346532546AA5400F9661B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					3203465B2546AA5400F9661B = {
 						CreatedOnToolsVersion = 12.2;
@@ -293,7 +294,7 @@
 				32C8F72325B22CBE00903E22 /* SwiftUISupport.swift in Sources */,
 				3203470225483A8500F9661B /* NSFetchRequestBuilder.swift in Sources */,
 				3203472D254C952600F9661B /* NSFetchRequestInspector.swift in Sources */,
-				320346812546ABB900F9661B /* Predicate.swift in Sources */,
+				320346812546ABB900F9661B /* FetchPredicate.swift in Sources */,
 				3203467D2546AB9A00F9661B /* Primitive.swift in Sources */,
 				320347132548EE4B00F9661B /* Functions.swift in Sources */,
 			);
@@ -360,9 +361,11 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 0.1.0;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -424,9 +427,11 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 0.1.0;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -452,20 +457,24 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = PredicateKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.faical.PredicateKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -473,8 +482,8 @@
 				SUPPORTED_PLATFORMS = "iphoneos macosx iphonesimulator appletvsimulator appletvos watchsimulator watchos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
-				WATCHOS_DEPLOYMENT_TARGET = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -484,28 +493,32 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = PredicateKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = dev.faical.PredicateKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos macosx iphonesimulator appletvsimulator appletvos watchsimulator watchos";
 				SWIFT_VERSION = 5.0;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
-				WATCHOS_DEPLOYMENT_TARGET = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -516,9 +529,10 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PredicateKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -530,7 +544,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos watchsimulator watchos appletvsimulator appletvos";
 				SWIFT_VERSION = 5.0;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 				WATCHOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Debug;
@@ -542,9 +556,10 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PredicateKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -556,7 +571,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos watchsimulator watchos appletvsimulator appletvos";
 				SWIFT_VERSION = 5.0;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 				WATCHOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Release;

@@ -22,7 +22,7 @@ import CoreData
 import Foundation
 
 extension NSManagedObjectContext {
-  /// Creates a request to fetch a list of objects matching the specified [predicate](x-source-tag://Predicate).
+  /// Creates a request to fetch a list of objects matching the specified [predicate](x-source-tag://DBPredicate).
   ///
   /// - Parameter predicate: The predicate to use to filter the objects in the underlying CoreData store.
   ///
@@ -42,11 +42,11 @@ extension NSManagedObjectContext {
   ///       .sorted(by: \.creationDate, .descending)
   ///       .fetchingOnly(\.text, \.creationDate)
   ///
-  public func fetch<Entity>(where predicate: Predicate<Entity>) -> FetchRequest<Entity> {
+  public func fetch<Entity>(where predicate: DBPredicate<Entity>) -> DBRequest<Entity> {
     .init(context: self, predicate: predicate)
   }
 
-  /// Counts the number of objects matching the specified [predicate](x-source-tag://Predicate).
+  /// Counts the number of objects matching the specified [predicate](x-source-tag://DBPredicate).
   ///
   /// - Parameter predicate: The predicate to use to match the objects included in the count.
   ///
@@ -58,8 +58,8 @@ extension NSManagedObjectContext {
   ///       where: (\Account.purchases).average >= 120.0
   ///     )
   ///
-  public func count<Entity: NSManagedObject>(where predicate: Predicate<Entity>) throws -> Int {
-    let request = FetchRequest<Entity>(context: self, predicate: predicate)
+  public func count<Entity: NSManagedObject>(where predicate: DBPredicate<Entity>) throws -> Int {
+    let request = DBRequest<Entity>(context: self, predicate: predicate)
     return try request.count()
   }
 
@@ -75,7 +75,7 @@ extension NSManagedObjectContext {
   ///       .sorted(by: \.creationDate, .descending)
   ///       .result()
   ///
-  public func fetchAll<Result>() -> FetchRequest<Result> {
+  public func fetchAll<Result>() -> DBRequest<Result> {
     fetch(where: true)
   }
 
@@ -88,7 +88,7 @@ extension NSManagedObjectContext {
   ///     let count = try managedObjectContext.countAll()
   ///
   public func countAll<Entity: NSManagedObject>(_: Entity.Type) throws -> Int {
-    let predicate: Predicate<Entity> = true
+    let predicate: DBPredicate<Entity> = true
     return try count(where: predicate)
   }
 }
@@ -115,7 +115,7 @@ extension NSManagedObjectContext {
 ///  # See also:
 ///  [NSFetchRequest](https://developer.apple.com/documentation/coredata/nsfetchrequest)
 ///
-public struct FetchRequest<Entity: NSManagedObject> {
+public struct DBRequest<Entity: NSManagedObject> {
   /// Represents a sorting criterion that determines how objects of type `T` should be sorted.
   public struct SortCriterion<T> {
     /// A custom comparator for objects of type `T`.
@@ -138,7 +138,7 @@ public struct FetchRequest<Entity: NSManagedObject> {
   }
 
   private let context: NSManagedObjectContext
-  private(set) var predicate: Predicate<Entity>
+  private(set) var predicate: DBPredicate<Entity>
   private(set) var sortCriteria: [SortCriterion<Entity>] = []
   private(set) var limit: Int?
   private(set) var offset: Int?
@@ -150,7 +150,7 @@ public struct FetchRequest<Entity: NSManagedObject> {
   private(set) var returnsDistinctResults: Bool?
   private(set) var shouldRefreshRefetchedObjects: Bool?
   private(set) var propertiesToGroupBy: [PartialKeyPath<Entity>]?
-  private(set) var havingPredicate: Predicate<Entity>?
+  private(set) var havingPredicate: DBPredicate<Entity>?
   private(set) var includesSubentities: Bool?
   private(set) var returnsObjectsAsFaults: Bool?
   private(set) var debugInspector: NSFetchRequestInspector?
@@ -159,7 +159,7 @@ public struct FetchRequest<Entity: NSManagedObject> {
     .init(entityName: entityName)
   }
 
-  init(context: NSManagedObjectContext, predicate: Predicate<Entity>) {
+  init(context: NSManagedObjectContext, predicate: DBPredicate<Entity>) {
     self.context = context
     self.predicate = predicate
   }
@@ -263,7 +263,7 @@ public struct FetchRequest<Entity: NSManagedObject> {
   /// # See also:
   /// [havingPredicate](https://developer.apple.com/documentation/coredata/nsfetchrequest/1506429-havingpredicate)
   ///
-  public func having(_ predicate: Predicate<Entity>) -> Self {
+  public func having(_ predicate: DBPredicate<Entity>) -> Self {
     updating(\.havingPredicate, with: predicate)
   }
 
@@ -434,7 +434,7 @@ public struct FetchRequest<Entity: NSManagedObject> {
     return Entity.entity().name ?? String(describing: Entity.self)
   }
 
-  private func updating<T>(_ keyPath: WritableKeyPath<FetchRequest<Entity>, T>, with value: T) -> Self {
+  private func updating<T>(_ keyPath: WritableKeyPath<DBRequest<Entity>, T>, with value: T) -> Self {
     var result = self
     result[keyPath: keyPath] = value
     return result

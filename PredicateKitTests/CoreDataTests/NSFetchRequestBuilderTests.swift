@@ -1156,7 +1156,7 @@ class IdentifiableData: NSManagedObject, Identifiable {
   @NSManaged var id: String
 }
 
-private func makeRequest<T: NSManagedObject>(_ predicate: Predicate<T>) -> FetchRequest<T> {
+private func makeRequest<T: NSManagedObject>(_ predicate: DBPredicate<T>) -> FetchRequest<T> {
   .init(context: NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType), predicate: predicate)
 }
 
