@@ -26,7 +26,7 @@ extension NSManagedObjectContext {
   ///
   /// - Parameter predicate: The predicate to use to filter the objects in the underlying CoreData store.
   ///
-  /// - Returns: A [FetchRequest](x-source-tag://FetchRequest) that can be customized further using modifiers or executed immediately.
+  /// - Returns: A [DBRequest](x-source-tag://DBRequest) that can be customized further using modifiers or executed immediately.
   ///
   /// ## Example
   ///
@@ -66,7 +66,7 @@ extension NSManagedObjectContext {
   /// Creates a request to fetch all the objects represented by the entity `Entity`.
   ///
   ///
-  /// - Returns: A [FetchRequest](x-source-tag://FetchRequest) that can be customized further using modifiers or executed immediately.
+  /// - Returns: A [DBRequest](x-source-tag://DBRequest) that can be customized further using modifiers or executed immediately.
   ///
   /// ## Example
   ///
@@ -93,15 +93,15 @@ extension NSManagedObjectContext {
   }
 }
 
-// MARK: - FetchRequest
+// MARK: - DBRequest
 
-// Tag: - FetchRequest
+// Tag: - DBRequest
 ///
 /// Represents a set of rules describing how to filter and retrieve a a list of objects of type `Entity`
 /// from CoreData persistent stores.
 ///
-/// You create a `FetchRequest` by calling the function `fetch(where:)` on an object of type `NSManagedObjectContext`.
-/// The resulting `FetchRequest` can be customized using modifiers and/or executed using the `result()` function.
+/// You create a `DBRequest` by calling the function `fetch(where:)` on an object of type `NSManagedObjectContext`.
+/// The resulting `DBRequest` can be customized using modifiers and/or executed using the `result()` function.
 ///
 /// # Example
 ///
@@ -109,7 +109,7 @@ extension NSManagedObjectContext {
 ///        .fetch(where: (\Note.text).contains("Hello, World!"))
 ///        // Apply the `sorted(by:)` modifier.
 ///        .sorted(by: \.creationDate, .descending)
-///        // Execute the `FetchRequest`.
+///        // Execute the `DBRequest`.
 ///        .result()
 ///
 ///  # See also:
@@ -159,7 +159,7 @@ public struct DBRequest<Entity: NSManagedObject> {
     .init(entityName: entityName)
   }
 
-  init(context: NSManagedObjectContext, predicate: DBPredicate<Entity>) {
+  public init(context: NSManagedObjectContext, predicate: DBPredicate<Entity>) {
     self.context = context
     self.predicate = predicate
   }

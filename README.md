@@ -110,7 +110,7 @@ dependencies: [
 
 ## Fetching objects
 
-To fetch objects using PredicateKit, use the function `fetch(where:)` on an instance of `NSManagedObjectContext` passing as argument a predicate. `fetch(where:)` returns an object of type `FetchRequest` on which you call `result()` to execute the request and retrieve the matching objects.
+To fetch objects using PredicateKit, use the function `fetch(where:)` on an instance of `NSManagedObjectContext` passing as argument a predicate. `fetch(where:)` returns an object of type `DBRequest` on which you call `result()` to execute the request and retrieve the matching objects.
 
 ###### Example
 
@@ -139,9 +139,9 @@ let notes: [[String: Any]] = try managedObjectContext
 
 ## Configuring the fetch
 
-`fetch(where:)` returns an object of type `FetchRequest`. You can apply a series of modifiers on this object to further configure how the objects should be matched and returned.
-For example, `sorted(by: \Note.creationDate, .descending)` is a modifier specifying that the objects should be sorted by the creation date in the descending order. A modifier returns a mutated `FetchRequest`; a series
-of modifiers can be chained together to create the final `FetchRequest`.
+`fetch(where:)` returns an object of type `DBRequest`. You can apply a series of modifiers on this object to further configure how the objects should be matched and returned.
+For example, `sorted(by: \Note.creationDate, .descending)` is a modifier specifying that the objects should be sorted by the creation date in the descending order. A modifier returns a mutated `DBRequest`; a series
+of modifiers can be chained together to create the final `DBRequest`.
 
 ###### Example
 
@@ -190,7 +190,7 @@ import SwiftUI
 struct ContentView: View {
 
   @SwiftUI.FetchRequest(
-    fetchRequest: FetchRequest(predicate: (\Note.text).contains("Hello, World!"))
+    fetchRequest: DBRequest(predicate: (\Note.text).contains("Hello, World!"))
       .limit(50)
       .offset(100)
       .sorted(by: \Note.creationDate)
@@ -804,7 +804,7 @@ managedObjectContext.fetch(where: ...)
 
 ## Debugging
 
-In `DEBUG` mode, you can inspect the actual `NSFetchRequest`s that are being executed by using the modifier `inspect(on:)` on a `FetchRequest`.
+In `DEBUG` mode, you can inspect the actual `NSFetchRequest`s that are being executed by using the modifier `inspect(on:)` on a `DBRequest`.
 
 ###### Example
 

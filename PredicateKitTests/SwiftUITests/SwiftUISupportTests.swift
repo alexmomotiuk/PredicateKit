@@ -25,8 +25,8 @@ import XCTest
 
 @testable import PredicateKit
 
-// Basic tests to ensure that predicates and fetch requests passed to SwiftUI's `FetchRequest` end up in the
-// view's graph. We don't really test here that our `DBPredicate`s and `FetchRequest`s are properly converted to
+// Basic tests to ensure that predicates and fetch requests passed to SwiftUI's `DBRequest` end up in the
+// view's graph. We don't really test here that our `DBPredicate`s and `DBRequest`s are properly converted to
 // `NSPredicate`s and `NSFetchRequest`s; we rely on the tests in `NSFetchRequestBuilderTests` and assume the conversion
 // correctness. Here, we just want to ensure that the view's graph will contain the expected `NSFetchRequest`.
 @available(iOS 15.0, watchOS 8.0, tvOS 15.0, macOS 12.0, *)
@@ -58,7 +58,7 @@ class SwiftUISupportTests: XCTestCase {
   func testFetchRequestPropertyWrapperWithPredicateAndSortDescriptors() throws {
     struct ContentView: View {
       @SwiftUI.FetchRequest(
-        fetchRequest: FetchRequest(predicate: \Note.creationDate < .now)
+        fetchRequest: DBRequest(predicate: \Note.creationDate < .now)
           .sorted(by: \.text, .ascending)
           .sorted(by: \.creationDate, .descending)
       )
@@ -93,7 +93,7 @@ class SwiftUISupportTests: XCTestCase {
   func testFetchRequestPropertyWrapperWithBasicModifier() throws {
     struct ContentView: View {
       @SwiftUI.FetchRequest(
-        fetchRequest: FetchRequest(predicate: \Note.creationDate < .now)
+        fetchRequest: DBRequest(predicate: \Note.creationDate < .now)
           .limit(100)
       )
       var notes: FetchedResults<Note>
@@ -150,7 +150,7 @@ class SwiftUISupportTests: XCTestCase {
   func testFetchRequestPropertyWrapperWithTransaction() throws {
     struct ContentView: View {
       @SwiftUI.FetchRequest(
-        fetchRequest: FetchRequest(predicate: \Note.text == "Hello, World!"),
+        fetchRequest: DBRequest(predicate: \Note.text == "Hello, World!"),
         transaction: .nonContinuousEaseInOut
       )
       var notes: FetchedResults<Note>
@@ -183,7 +183,7 @@ class SwiftUISupportTests: XCTestCase {
   func testFetchRequestPropertyWrapperWithNoPredicate() throws {
     struct ContentView: View {
       @SwiftUI.FetchRequest(
-        fetchRequest: FetchRequest()
+        fetchRequest: DBRequest()
           .sorted(by: \.text, .ascending)
       )
       var notes: FetchedResults<Note>

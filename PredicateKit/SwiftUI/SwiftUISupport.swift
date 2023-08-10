@@ -53,7 +53,7 @@ extension SwiftUI.FetchRequest where Result: NSManagedObject {
   ///
   ///     struct ContentView: View {
   ///       @SwiftUI.FetchRequest(
-  ///         fetchRequest: FetchRequest(predicate: (\Note.text).contains("Hello, World!"))
+  ///         fetchRequest: DBRequest(predicate: (\Note.text).contains("Hello, World!"))
   ///           .limit(50)
   ///           .offset(100)
   ///           .sorted(by: \Note.creationDate)
@@ -81,7 +81,7 @@ extension SwiftUI.FetchRequest where Result: NSManagedObject {
   ///
   ///      struct ContentView: View {
   ///        @SwiftUI.FetchRequest(
-  ///          fetchRequest: FetchRequest(predicate: \Note.text == "Hello, World!")),
+  ///          fetchRequest: DBRequest(predicate: \Note.text == "Hello, World!")),
   ///          transaction: Transaction(animation: .easeIn)
   ///        )
   ///        var notes: FetchedResults<Note>
@@ -114,7 +114,7 @@ extension DBRequest {
   ///
   ///       struct ContentView: View {
   ///        @SwiftUI.FetchRequest(
-  ///          fetchRequest: FetchRequest(predicate: (\Note.text).contains("Hello, World!"))
+  ///          fetchRequest: DBRequest(predicate: (\Note.text).contains("Hello, World!"))
   ///            .sorted(by: \Note.creationDate, .ascending)
   ///            .limit(100)
   ///        )
