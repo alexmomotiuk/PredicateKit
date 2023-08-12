@@ -256,6 +256,10 @@ public indirect enum DBPredicate<Root> {
   case and(DBPredicate<Root>, DBPredicate<Root>)
   case or(DBPredicate<Root>, DBPredicate<Root>)
   case not(DBPredicate<Root>)
+    
+    public func toNSPredicate(_ options: NSPredicateBuilderOptions = .init(keyPathsPrefix: nil)) -> NSPredicate {
+        return NSPredicateBuilder(self, options: options).nsPredicate
+    }
 }
 
 public struct Comparison {

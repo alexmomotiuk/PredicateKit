@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		320346662546AA5400F9661B /* PredicateKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3203465C2546AA5400F9661B /* PredicateKit.framework */; };
 		3203466D2546AA5400F9661B /* PredicateKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3203465F2546AA5400F9661B /* PredicateKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3203467D2546AB9A00F9661B /* Primitive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3203467C2546AB9A00F9661B /* Primitive.swift */; };
-		320346812546ABB900F9661B /* FetchPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346802546ABB900F9661B /* FetchPredicate.swift */; };
+		320346812546ABB900F9661B /* DBPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346802546ABB900F9661B /* DBPredicate.swift */; };
 		320346862546B70000F9661B /* NSManagedObjectContextExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346852546B70000F9661B /* NSManagedObjectContextExtensions.swift */; };
 		320346E12547073A00F9661B /* PrimitiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346E02547073A00F9661B /* PrimitiveTests.swift */; };
 		320346E925470CA700F9661B /* OperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 320346E825470CA700F9661B /* OperatorTests.swift */; };
@@ -44,7 +44,7 @@
 		320346652546AA5400F9661B /* PredicateKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PredicateKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3203466C2546AA5400F9661B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3203467C2546AB9A00F9661B /* Primitive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitive.swift; sourceTree = "<group>"; };
-		320346802546ABB900F9661B /* FetchPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPredicate.swift; sourceTree = "<group>"; };
+		320346802546ABB900F9661B /* DBPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBPredicate.swift; sourceTree = "<group>"; };
 		320346852546B70000F9661B /* NSManagedObjectContextExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContextExtensions.swift; sourceTree = "<group>"; };
 		320346E02547073A00F9661B /* PrimitiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimitiveTests.swift; sourceTree = "<group>"; };
 		320346E825470CA700F9661B /* OperatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorTests.swift; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 				320347122548EE4B00F9661B /* Functions.swift */,
 				320346602546AA5400F9661B /* Info.plist */,
 				3203467C2546AB9A00F9661B /* Primitive.swift */,
-				320346802546ABB900F9661B /* FetchPredicate.swift */,
+				320346802546ABB900F9661B /* DBPredicate.swift */,
 				3203465F2546AA5400F9661B /* PredicateKit.h */,
 			);
 			path = PredicateKit;
@@ -294,7 +294,7 @@
 				32C8F72325B22CBE00903E22 /* SwiftUISupport.swift in Sources */,
 				3203470225483A8500F9661B /* NSFetchRequestBuilder.swift in Sources */,
 				3203472D254C952600F9661B /* NSFetchRequestInspector.swift in Sources */,
-				320346812546ABB900F9661B /* FetchPredicate.swift in Sources */,
+				320346812546ABB900F9661B /* DBPredicate.swift in Sources */,
 				3203467D2546AB9A00F9661B /* Primitive.swift in Sources */,
 				320347132548EE4B00F9661B /* Functions.swift in Sources */,
 			);
