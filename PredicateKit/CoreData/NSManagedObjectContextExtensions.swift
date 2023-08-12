@@ -137,7 +137,7 @@ public struct DBRequest<Entity: NSManagedObject> {
     }
   }
 
-  private let context: NSManagedObjectContext
+  private var context: NSManagedObjectContext
   private(set) var predicate: DBPredicate<Entity>
   private(set) var sortCriteria: [SortCriterion<Entity>] = []
   private(set) var limit: Int?
@@ -287,6 +287,10 @@ public struct DBRequest<Entity: NSManagedObject> {
   ///
   public func returningObjectsAsFaults(_ returnsObjectsAsFaults: Bool) -> Self {
     updating(\.returnsObjectsAsFaults, with: returnsObjectsAsFaults)
+  }
+    
+  public func on(_ context: NSManagedObjectContext) -> Self {
+    updating(\.context, with: context)
   }
 
   /// Specifies how the objects returned by the request should be sorted.
