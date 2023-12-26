@@ -386,6 +386,10 @@ public func == <E: Expression> (lhs: E, rhs: UUID) -> DBPredicate<E.Root> where 
   .comparison(.init(lhs, .equal, rhs, []))
 }
 
+public func == <E: Expression> (lhs: E, rhs: UUID) -> DBPredicate<E.Root> where E.Value == Optional<UUID> {
+  .comparison(.init(lhs, .equal, rhs, []))
+}
+
 @available(iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public func == <E: Expression, T: Identifiable> (lhs: E, rhs: T) -> DBPredicate<E.Root> where E.Value == T, T.ID: Primitive {
   .comparison(.init(ObjectIdentifier<E, T.ID>(root: lhs), .equal, rhs.id))
